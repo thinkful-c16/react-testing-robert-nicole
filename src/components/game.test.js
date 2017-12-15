@@ -27,21 +27,39 @@ describe('<Game />', ()=>{
 		expect(wrapper.state('feedback')).toEqual('Please enter a valid number');
 	})
 
-	it('should provide the correct feedback'), ()=>{
+	it('should provide the correct feedback', ()=>{
 		const wrapper = shallow(<Game />);
 		wrapper.setState({
 			correctAnswer: 1
-		})
+		});
 
 		wrapper.instance().makeGuess('100');
 		expect(wrapper.state('feedback')).toEqual('You\'re Ice Cold...');
-		wrapper.instance().makeGuess('30');
+		wrapper.instance().makeGuess('32');
 		expect(wrapper.state('feedback')).toEqual('You\'re Cold...');
-		wrapper.instance().makeGuess('10');
+		wrapper.instance().makeGuess('12');
 		expect(wrapper.state('feedback')).toEqual('You\'re Warm.');
 		wrapper.instance().makeGuess('2');
 		expect(wrapper.state('feedback')).toEqual('You\'re Hot!');
 		wrapper.instance().makeGuess('1');
 		expect(wrapper.state('feedback')).toEqual('You got it!');
-	}
+	})
+
+	it ('should generate an aural update', () => {
+		const wrapper = shallow(<Game />);
+
+		wrapper.setState({
+			correctAnswer: 1
+		});
+
+		wrapper.instance().makeGuess(99);
+		wrapper.instance().makeGuess(88);
+		wrapper.instance().makeGuess(77);
+		wrapper.instance().makeGuess(66);
+		wrapper.instance().makeGuess(55);
+
+		wrapper.instance().generateAuralUpdate();
+
+		expect(wrapper.state('auralStatus')).toEqual('Here\'s the status of the game right now: You\'re Ice Cold... You\'ve made 5 guesses. In order of most- to least-recent, they are: 55, 66, 77, 88, 99')
+	})
 })

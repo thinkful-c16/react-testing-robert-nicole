@@ -26,4 +26,22 @@ describe('<Game />', ()=>{
 		wrapper.instance().makeGuess('A');
 		expect(wrapper.state('feedback')).toEqual('Please enter a valid number');
 	})
+
+	it('should provide the correct feedback'), ()=>{
+		const wrapper = shallow(<Game />);
+		wrapper.setState({
+			correctAnswer: 1
+		})
+
+		wrapper.instance().makeGuess('100');
+		expect(wrapper.state('feedback')).toEqual('You\'re Ice Cold...');
+		wrapper.instance().makeGuess('30');
+		expect(wrapper.state('feedback')).toEqual('You\'re Cold...');
+		wrapper.instance().makeGuess('10');
+		expect(wrapper.state('feedback')).toEqual('You\'re Warm.');
+		wrapper.instance().makeGuess('2');
+		expect(wrapper.state('feedback')).toEqual('You\'re Hot!');
+		wrapper.instance().makeGuess('1');
+		expect(wrapper.state('feedback')).toEqual('You got it!');
+	}
 })

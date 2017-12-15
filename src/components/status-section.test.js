@@ -4,6 +4,6 @@ import {shallow} from 'enzyme'
 
 describe('<StatusSection />', ()=>{
 	it('Smoke test.', ()=>{
-		shallow(<StatusSection />)
+		shallow(<StatusSection guesses={[]}/>)
 	})
 })
